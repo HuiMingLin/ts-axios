@@ -24,9 +24,14 @@ export interface AxiosRequestConfig {
   timeout?: number;
   transformRequest?: AxiosTransformer | AxiosTransformer[];
   transformResponse?: AxiosTransformer | AxiosTransformer[];
-  cancelToken?: CancelToken
+  cancelToken?: CancelToken;
+  withCredentials?: boolean;
+  xsrfCookieName?: string;
+  xsrfHeaderName?: string;
+  onDownloadProgress?: (e: ProgressEvent) => void
+  onUploadProgress?: (e: ProgressEvent) => void
 
-  [propName: string]: any
+  [propName: string]: any;
 }
 
 export interface AxiosResponse<T = any> {

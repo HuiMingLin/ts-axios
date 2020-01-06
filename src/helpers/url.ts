@@ -1,4 +1,10 @@
 import { isDate, isPlainObject } from './uitl'
+import { resolve } from 'url';
+
+interface URLOrigin {
+  protocol: string;
+  host: string;
+}
 
 function encode(val: string): string {
   return encodeURIComponent(val)
@@ -50,4 +56,22 @@ export function buildURL(url: string, params: any): string {
     url += (~url.indexOf('?') ? '&' : '?') + serializedParams
   }
   return url
+}
+  
+export function isURLSameOrigin(requestUrl: string): boolean {
+  const parsedOrigin = resolveUrl(requestUrl)
+  return (parsedOrigin.protocol === currentOrigin.protocol && parsedOrigin.host === currentOrigin.host)
+}
+
+const urlParsingNode = document.createElement('a')
+const currentOrigin = resolveUrl(window.location.href)
+
+function resolveUrl(url: string): URLOrigin {
+  urlParsingNode.setAttribute('href', url)
+  const { protocol, host } = urlParsingNode
+
+  return {
+    protocol,
+    host
+  }
 }
