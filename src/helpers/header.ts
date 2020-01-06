@@ -1,4 +1,5 @@
-import { isPlainObject } from './uitl'
+import { isPlainObject, deepMerge } from './uitl'
+import { AxiosMethod } from '../types';
 
 const CONTENT_TYPE = 'Content-Type'
 
@@ -44,3 +45,21 @@ export function parseHeaders(headers: string): any {
 
   return parsed
 }
+
+export function flattenHeaders(headers: any, method: AxiosMethod): any {
+  if(!headers) {
+    return headers
+  }
+
+  headers = deepMerge(headers.common, headers[method], headers)
+
+  const methodToDelete = ['delete', 'get', 'head', 'options',
+    'post', 'put', 'patch', 'common']
+
+  methodToDelete.forEach(method => {
+    delete headers[method]
+  })
+
+  return headers
+}
+

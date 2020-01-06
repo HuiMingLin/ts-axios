@@ -15,13 +15,18 @@ export type AxiosMethod =
   | 'PATCH'
 
 export interface AxiosRequestConfig {
-  url?: string
-  method?: AxiosMethod
-  data?: any
-  params?: any
-  headers?: any
-  responseType?: XMLHttpRequestResponseType
-  timeout?: number
+  url?: string;
+  method?: AxiosMethod;
+  data?: any;
+  params?: any;
+  headers?: any;
+  responseType?: XMLHttpRequestResponseType;
+  timeout?: number;
+  transformRequest?: AxiosTransformer | AxiosTransformer[];
+  transformResponse?: AxiosTransformer | AxiosTransformer[];
+  cancelToken?: CancelToken
+
+  [propName: string]: any
 }
 
 export interface AxiosResponse<T = any> {
@@ -43,6 +48,13 @@ export interface AxiosError extends Error {
 }
 
 export interface Axios {
+  defaults: AxiosRequestConfig;
+
+  interceptors: {
+    request: AxiosInterceptorManager<AxiosRequestConfig>;
+    response: AxiosInterceptorManager<AxiosRequestConfig>
+  };
+
   request<T = any>(config: AxiosRequestConfig): AxiosPromise<T>
 
   get<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
@@ -64,4 +76,64 @@ export interface AxiosInstance extends Axios {
   <T = any>(config: AxiosRequestConfig): AxiosPromise<T>
 
   <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
+}
+
+export interface AxiosStatic extends AxiosInstance {
+  create(config?: AxiosRequestConfig): AxiosInstance
+
+  CancelToken: CancelTokenStatic
+  Cancel: CancelStatic
+  isCancel: (value: any) => boolean
+}
+
+export interface AxiosInterceptorManager<T> {
+  use(resolved: ResolvedFn<T>, rejected?: RejectedFn): number;
+
+  eject(id: number): void
+}
+
+export interface ResolvedFn<T> {
+  (val: T): T | AxiosPromise<T>
+}
+
+export interface RejectedFn {
+  (error: any): any
+}
+
+export interface AxiosTransformer {
+  (data: any, headers?: any): any
+}
+
+export interface CancelToken {
+  promise: Promise<Cancel>
+  reason?: Cancel
+
+  throwIfRequested(): void
+}
+
+export interface Canceler {
+  (message?: string):void
+}
+
+export interface CancelExecutor {
+  (cancel: Canceler): void
+}
+
+export interface CancelTokenSource {
+  token: CancelToken
+  cancel: Canceler
+}
+
+export interface CancelTokenStatic {
+  new(executor: CancelExecutor): CancelToken
+
+  source(): CancelTokenSource
+}
+
+export interface Cancel {
+  message?: string
+}
+
+export interface CancelStatic {
+  new(message?: string): Cancel
 }
