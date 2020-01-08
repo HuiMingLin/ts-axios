@@ -1,13 +1,11 @@
-import axios from '../../src/index'
+import axios, { AxiosError } from '../../src/index'
 import 'nprogress/nprogress.css'
 import NProgress from 'nprogress'
 
 // document.cookie = 'a=b'
-
 // axios.get('/more/get').then((res) => {
 //   console.log(res);
 // }).catch()
-
 // axios.post('http://127.0.0.1:8088/more/server2', {}, {
 //   withCredentials: true
 // }).then((res) => {
@@ -18,63 +16,81 @@ import NProgress from 'nprogress'
 //   xsrfCookieName: 'XSRF-TOKEN-D',
 //   xsrfHeaderName: 'X-XSRF-TOKEN-D'
 // })
-
 // instance.get('/more/get').then(res => {
 //   console.log(res);
 // }).catch()
 
-const instance = axios.create()
+// const instance = axios.create()
+// function calculatePercentage(loaded: number, total: number) {
+//   return Math.floor(loaded * 1.0) / total
+// }
+// function loadProgressBar() {
+//   const setupStartProgress = () => {
+//     instance.interceptors.request.use(config => {
+//       NProgress.start()
+//       return config
+//     })
+//   }
+//   const setupUpdateProgress = () => {
+//     const update = (e: ProgressEvent) => {
+//       console.log(e);
+//       NProgress.set(calculatePercentage(e.loaded, e.total))
+//     }
+//     instance.defaults.onDownloadProgress = update
+//     instance.defaults.onUploadProgress = update
+//   }
+//   const setupStopProgress = () => {
+//     instance.interceptors.response.use(response => {
+//       NProgress.done()
+//       return response
+//     }, error => {
+//       NProgress.done()
+//       return Promise.reject(error)
+//     })
+//   }
+//   setupStartProgress()
+//   setupUpdateProgress()
+//   setupStopProgress()
+// }
+// loadProgressBar()
+// const downloadEl = document.getElementById('download')
+// document.addEventListener('click', e => {
+//   instance.get('https://img1.mukewang.com/5dce250e08058e9c06000338-240-135.jpg')
+// })
+// const uploadEl = document.getElementById('upload')
+// uploadEl!.addEventListener('click', e => {
+//   const data = new FormData()
+//   const fileEl = document.getElementById('file') as HTMLInputElement
+//   if(fileEl.files) {
+//     data.append('file', fileEl.files[0])
+//     instance.post('/more/upload', data)
+//   }
+// })
 
-function calculatePercentage(loaded: number, total: number) {
-  return Math.floor(loaded * 1.0) / total
-}
+// axios.post('/more/post', {
+//   a: 1
+// }, {
+//   auth: {
+//     username: 'Lin1',
+//     password: '123456'
+//   }
+// }).then((res) => {
+//   console.log(res);
+// }).catch()
 
-function loadProgressBar() {
-  const setupStartProgress = () => {
-    instance.interceptors.request.use(config => {
-      NProgress.start()
-      return config
-    })
-  }
-  const setupUpdateProgress = () => {
-    const update = (e: ProgressEvent) => {
-      console.log(e);
-      NProgress.set(calculatePercentage(e.loaded, e.total))
-    }
-    instance.defaults.onDownloadProgress = update
-    instance.defaults.onUploadProgress = update
-  }
-  const setupStopProgress = () => {
-    instance.interceptors.response.use(response => {
-      NProgress.done()
-      return response
-    }, error => {
-      NProgress.done()
-      return Promise.reject(error)
-    })
-  }
-
-  setupStartProgress()
-  setupUpdateProgress()
-  setupStopProgress()
-}
-
-loadProgressBar()
-
-const downloadEl = document.getElementById('download')
-
-document.addEventListener('click', e => {
-  instance.get('https://img1.mukewang.com/5dce250e08058e9c06000338-240-135.jpg')
+axios.get('/more/304')
+.then((res) => {
+  console.log(res);
+}).catch((e: AxiosError) => {
+  console.log(e.message);
 })
-
-const uploadEl = document.getElementById('upload')
-
-uploadEl!.addEventListener('click', e => {
-  const data = new FormData()
-  const fileEl = document.getElementById('file') as HTMLInputElement
-  if(fileEl.files) {
-    data.append('file', fileEl.files[0])
-
-    instance.post('/more/upload', data)
+axios.get('/more/304', {
+  validateStatus(status) {
+    return status >= 200 && status < 300
   }
+})
+.then((res) => {
+  console.log(res);
+}).catch((e: AxiosError) => {
+  console.log(e.message);
 })
