@@ -134,6 +134,7 @@
     "webpack-hot-middleware": "^2.25.0"
   },
   "dependencies": {
-    "nprogress": "^0.2.0"
+    "nprogress": "^0.2.0",
+    "qs": "^6.9.1"
   }
 }

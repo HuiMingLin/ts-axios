@@ -191,4 +191,10 @@ function registerMoreRouter() {
       res.end('UnAuthorization')
     }
   })
+  router.get('/more/A', function(req, res) {
+    res.json('A')
+  })
+  router.get('/more/B', function(req, res) {
+    res.json('B')
+  })
 }
