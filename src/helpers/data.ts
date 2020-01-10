@@ -1,4 +1,4 @@
-import { isPlainObject } from './uitl'
+import { isPlainObject } from './util'
 
 export function transformRequest(data: any): any {
   if (isPlainObject(data)) {

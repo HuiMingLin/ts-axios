@@ -1,5 +1,4 @@
-import { isDate, isPlainObject, isURLSearchParams } from './uitl'
-import { resolve } from 'url';
+import { isDate, isPlainObject, isURLSearchParams } from './util'
 
 interface URLOrigin {
   protocol: string;
@@ -17,7 +16,7 @@ function encode(val: string): string {
     .replace(/%5D/gi, ']')
 }
 
-export function buildURL(url: string, params: any, paramSerializer?: (params: any) => string): string {
+export function buildURL(url: string, params?: any, paramSerializer?: (params: any) => string): string {
   if (!params) {
     return url
   }
@@ -67,7 +66,7 @@ export function buildURL(url: string, params: any, paramSerializer?: (params: an
 }
 
 export function isAbsoluteURL(url: string): boolean {
-  return /(^[a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
 }
 
 export function combineURL(baseURL: string, relativeURL?: string): string {

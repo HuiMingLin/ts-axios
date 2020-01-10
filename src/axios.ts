@@ -1,6 +1,6 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosStatic } from './types'
 import Axios from './core/Axios'
-import { extend } from './helpers/uitl'
+import { extend } from './helpers/util'
 import defaults from './defaults';
 import mergeConfig from './core/mergeConfig';
 import CancelToken from './cancel/CancelToken';
