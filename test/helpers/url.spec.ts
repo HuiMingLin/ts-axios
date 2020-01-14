@@ -1,5 +1,4 @@
 import { buildURL, isAbsoluteURL, combineURL, isURLSameOrigin } from '../../src/helpers/url'
-
 describe('helpers:url', () => {
   describe('buildURL', () => {
     test('should support null params', () => {

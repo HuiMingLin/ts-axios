@@ -8,8 +8,8 @@ import { isFormData } from '../helpers/util';
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
     const {
-      data = null, url, method = 'get',
-      headers, responseType, timeout,
+      data = null, url, method,
+      headers = {}, responseType, timeout,
       cancelToken,
       withCredentials,
       xsrfCookieName,
@@ -22,7 +22,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
 
     const request = new XMLHttpRequest()
 
-    request.open(method.toUpperCase(), url!, true)
+    request.open(method!.toUpperCase(), url!, true)
 
     configureRequest()
 
@@ -59,7 +59,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         }
 
         const requestHeaders = parseHeaders(request.getAllResponseHeaders())
-        const responseData = responseType !== 'text' ? request.response : request.responseText
+        const responseData = responseType && responseType !== 'text' ? request.response : request.responseText
         const response: AxiosResponse = {
           data: responseData,
           status: request.status,
